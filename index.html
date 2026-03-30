@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerTools | Free WhatsApp & Seller Utility</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="hero">
+        <h1>All Seller Tools.<br><span class="neon-text">Zero Cost.</span></h1>
+        <div class="search-container">
+            <input type="text" id="toolSearch" placeholder="Search any tool... (e.g. PDF)">
+        </div>
+    </header>
+
+    <section class="quick-tools">
+        <h3>Recent & Quick</h3>
+        <div class="horizontal-scroll" id="recentTools">
+            <button class="chip">Compress Image</button>
+            <button class="chip">Make PDF</button>
+        </div>
+    </section>
+
+    <main class="tool-grid" id="mainGrid">
+        <div class="tool-card" id="openCompressorBtn">
+            <div class="icon">🖼️</div><h3>Compress Image</h3><p>Shrink size under 100KB</p>
+        </div>
+        <div class="tool-card" id="openPdfBtn">
+            <div class="icon">📝</div><h3>Image to PDF</h3><p>Convert photos to catalog</p>
+        </div>
+        <div class="tool-card" id="openTextToPdfBtn">
+            <div class="icon">📄</div><h3>Text to PDF</h3><p>Type text and convert</p>
+        </div>
+        <div class="tool-card" id="openHandwritingBtn">
+            <div class="icon">✍️</div><h3>Handwriting</h3><p>Text to realistic handwriting</p>
+        </div>
+        <div class="tool-card" id="openWaLinkBtn">
+            <div class="icon">💬</div><h3>WhatsApp Link</h3><p>Create direct chat URLs</p>
+        </div>
+        <div class="tool-card" id="openFancyFontBtn">
+            <div class="icon">✨</div><h3>Fancy Fonts</h3><p>Style text for Instagram/Bio</p>
+        </div>
+        <div class="tool-card" id="openTemplatesBtn">
+            <div class="icon">📋</div><h3>1-Click Templates</h3><p>Copy-paste message library</p>
+        </div>
+        <div class="tool-card" id="openQrBtn">
+            <div class="icon">🔳</div><h3>QR Generator</h3><p>Create UPI or Link QRs</p>
+        </div>
+        <div class="tool-card" id="openCalcBtn">
+            <div class="icon">🧮</div><h3>Calculators</h3><p>Margin & EMI tools</p>
+        </div>
+        <div class="tool-card" id="openWatermarkBtn">
+            <div class="icon">©️</div><h3>Watermark</h3><p>Stamp text or logo on photos</p>
+        </div>
+        <div class="tool-card" id="openInvoiceBtn">
+            <div class="icon">🧾</div><h3>Invoice Maker</h3><p>Generate PDF bills</p>
+        </div>
+        <div class="tool-card" id="openHeicBtn">
+            <div class="icon">🔄</div><h3>HEIC to JPG</h3><p>Fix iPhone photos</p>
+        </div>
+        <div class="tool-card" id="openCounterBtn">
+            <div class="icon">📊</div><h3>Word Counter</h3><p>Count words & reading time</p>
+        </div>
+        <div class="tool-card" id="openCaseBtn">
+            <div class="icon">🔠</div><h3>Case Converter</h3><p>UPPER, lower, Title Case</p>
+        </div>
+        <div class="tool-card" id="openColorPickerBtn">
+            <div class="icon">🎨</div><h3>Color Picker</h3><p>Extract HEX from photos</p>
+        </div>
+        <div class="tool-card" id="openWheelBtn">
+            <div class="icon">🎲</div><h3>Random Picker</h3><p>Giveaway winner raffle</p>
+        </div>
+        <div class="tool-card" id="openBizCardBtn">
+            <div class="icon">🪪</div><h3>Business Card</h3><p>Generate print-ready cards</p>
+        </div>
+        <div class="tool-card" id="openBionicBtn">
+            <div class="icon">⚡</div><h3>Fast Reader</h3><p>Bionic text for quick study</p>
+        </div>
+        <div class="tool-card" id="openRecallBtn">
+            <div class="icon">🧠</div><h3>Active Recall</h3><p>Censor text to memorize</p>
+        </div>
+        <div class="tool-card" id="openSkeletonBtn">
+            <div class="icon">🦴</div><h3>Skeletonizer</h3><p>Strip fluff, get keywords</p>
+        </div>
+    </main>
+
+    <section id="compressTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🖼️ Compress Image</h2>
+        <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp" style="margin-bottom: 20px; color: var(--text-main); width: 100%;">
+        <div id="previewArea" style="display: none;">
+            <p>Original Size: <strong id="originalSize"></strong></p>
+            <p>New Size: <strong id="compressedSize" class="neon-text"></strong></p>
+            <a id="downloadBtn" class="download-btn" download="compressed_image.jpg">Download Image</a>
+        </div>
+    </section>
+
+    <section id="pdfTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>📝 Image to PDF Catalog</h2>
+        <input type="file" id="pdfImageInput" accept="image/png, image/jpeg, image/webp" multiple style="margin-bottom: 20px; color: var(--text-main); width: 100%;">
+        <div id="pdfPreviewArea" style="display: none;">
+            <p id="pdfStatus" style="margin-bottom: 10px; font-weight: bold;"></p>
+            <button id="generatePdfBtn" class="download-btn">Download PDF Catalog</button>
+        </div>
+    </section>
+
+    <section id="textToPdfTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>📄 Text to PDF</h2>
+        <textarea id="pdfTextInput" placeholder="Start typing your content here..." class="tool-textarea"></textarea>
+        <div style="margin-bottom: 20px;">
+            <label style="color: var(--text-muted); margin-right: 10px;">File Name:</label>
+            <input type="text" id="textToPdfFileName" placeholder="my_document" class="tool-input">
+        </div>
+        <button id="generateTextToPdfBtn" class="download-btn">Download Text PDF</button>
+    </section>
+
+    <section id="handwritingTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>✍️ Text to Handwriting</h2>
+        <div class="hw-controls" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="grid-column: span 2;">
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Text Font Size</label>
+                <input type="range" id="hwFontSize" min="20" max="80" value="40" style="width: 100%; cursor: pointer;">
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Ink Color</label>
+                <select id="hwInkColor" class="tool-input" style="width: 100%; cursor: pointer;">
+                    <option value="#000080">Dark Blue</option>
+                    <option value="#1a1a1a">Black</option>
+                    <option value="#b30000">Red</option>
+                </select>
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Paper Type</label>
+                <select id="hwPaperType" class="tool-input" style="width: 100%; cursor: pointer;">
+                    <option value="ruled">Ruled Lines</option>
+                    <option value="blank">Blank Paper</option>
+                </select>
+            </div>
+            <div style="grid-column: span 2;">
+                <label style="color: var(--accent-cyan); font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 5px;">Preview Zoom</label>
+                <input type="range" id="hwZoom" min="20" max="100" value="100" style="width: 100%; cursor: pointer;">
+            </div>
+        </div>
+        <textarea id="hwTextInput" placeholder="Type your notes here..." class="tool-textarea" style="height: 120px;"></textarea>
+        <div class="canvas-container">
+            <canvas id="hwCanvas" style="width: 100%;"></canvas>
+        </div>
+        <button id="downloadHwBtn" class="download-btn">Download as Image</button>
+    </section>
+
+    <section id="waLinkTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>💬 WhatsApp Link Builder</h2>
+        <div style="margin-bottom: 15px;">
+            <label style="color: var(--text-muted); margin-bottom: 5px; display: block;">Phone Number (with country code)</label>
+            <input type="number" id="waPhone" placeholder="910000000000" class="tool-input" style="width: 100%;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="color: var(--text-muted); margin-bottom: 5px; display: block;">Pre-filled Message</label>
+            <textarea id="waMessage" placeholder="Hi! I want to order..." class="tool-textarea" style="height: 120px; margin-bottom: 10px;"></textarea>
+        </div>
+        <button id="generateWaLinkBtn" class="download-btn">Generate Link</button>
+        <div id="waOutputArea" style="display: none; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid var(--accent-cyan);">
+            <p style="word-break: break-all; color: var(--accent-cyan); margin-bottom: 15px; font-weight: bold;" id="waGeneratedLink"></p>
+            <button id="copyWaLinkBtn" class="chip" style="margin-right: 10px;">📋 Copy Link</button>
+            <a id="testWaLinkBtn" href="#" target="_blank" class="chip" style="text-decoration: none; display: inline-block;">Test Link ↗</a>
+        </div>
+    </section>
+
+    <section id="fancyFontTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>✨ Fancy Font Generator</h2>
+        <textarea id="ffInput" placeholder="Type your text here to see 50 styles..." class="tool-textarea" style="height: 100px; margin-bottom: 15px;"></textarea>
+        <div id="ffOutputList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+    </section>
+
+    <section id="templatesTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>📋 1-Click Templates</h2>
+        <div class="horizontal-scroll" style="margin-bottom: 20px;" id="templateCategories">
+            <button class="chip active-category" data-cat="seller">Seller & Business</button>
+            <button class="chip" data-cat="student">Student & College</button>
+            <button class="chip" data-cat="general">General / Apology</button>
+        </div>
+        <div id="templatesContainer" class="template-grid"></div>
+    </section>
+
+    <section id="qrTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🔳 QR Code Generator</h2>
+        <input type="text" id="qrInput" placeholder="e.g., yourname@okhdfcbank or https://google.com" class="tool-input" style="width: 100%; margin-bottom: 15px;">
+        <button id="generateQrBtn" class="download-btn" style="margin-bottom: 20px;">Generate QR Code</button>
+        <div id="qrOutputArea" style="display: none; text-align: center; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; border: 1px solid var(--accent-cyan);">
+            <div id="qrcode" style="display: inline-block; background: #fff; padding: 15px; border-radius: 8px;"></div>
+            <br>
+            <button id="downloadQrBtn" class="download-btn" style="margin-top: 15px;">Download Image</button>
+        </div>
+    </section>
+
+    <section id="calcTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🧮 Financial Calculators</h2>
+        <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; border: 1px solid var(--accent-cyan); margin-bottom: 20px;">
+            <h3 style="margin-bottom: 15px; color: var(--accent-cyan);">📈 Profit & Margin</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Cost Price (₹)</label>
+                    <input type="number" id="calcCp" class="tool-input" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Selling Price (₹)</label>
+                    <input type="number" id="calcSp" class="tool-input" style="width: 100%;">
+                </div>
+            </div>
+            <p id="marginOutput" style="font-size: 1.1rem; font-weight: bold; color: var(--text-main);">Profit: ₹0 <br> Margin: 0%</p>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; border: 1px solid var(--accent-purple);">
+            <h3 style="margin-bottom: 15px; color: var(--accent-purple);">💳 EMI Calculator</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Amount</label>
+                    <input type="number" id="calcLoan" class="tool-input" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Interest (%)</label>
+                    <input type="number" id="calcRate" class="tool-input" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Months</label>
+                    <input type="number" id="calcMonths" class="tool-input" style="width: 100%;">
+                </div>
+            </div>
+            <p id="emiOutput" style="font-size: 1.1rem; font-weight: bold; color: var(--text-main); line-height: 1.6;">EMI: ₹0/mo</p>
+        </div>
+    </section>
+
+    <section id="watermarkTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>©️ Image Watermarker</h2>
+        <input type="file" id="wmImageInput" accept="image/png, image/jpeg, image/webp" style="margin-bottom: 20px; color: var(--text-main); width: 100%;">
+        
+        <select id="wmTypeSelect" class="tool-input" style="margin-bottom: 15px;">
+            <option value="text">Text Watermark</option>
+            <option value="image">Logo / Image Watermark</option>
+        </select>
+
+        <div class="hw-controls" id="wmTextControls" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="grid-column: span 2;">
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Watermark Text</label>
+                <input type="text" id="wmTextInput" class="tool-input" style="width: 100%;">
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Color</label>
+                <input type="color" id="wmColorInput" value="#ffffff" style="width: 100%; height: 40px; border: none; padding: 0;">
+            </div>
+        </div>
+
+        <div class="hw-controls" id="wmImageControls" style="display: none; margin-bottom: 15px;">
+            <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Upload Logo (PNG with transparent background recommended)</label>
+            <input type="file" id="wmLogoInput" accept="image/png, image/jpeg, image/webp" class="tool-input" style="width: 100%;">
+        </div>
+
+        <div class="hw-controls" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="grid-column: span 2;">
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Position</label>
+                <select id="wmPositionSelect" class="tool-input" style="width: 100%; padding: 8px;">
+                    <option value="center">Center</option>
+                    <option value="bottom-right">Bottom Right</option>
+                    <option value="top-left">Top Left</option>
+                    <option value="tile">Tile (Repeated)</option>
+                </select>
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Opacity (%)</label>
+                <input type="range" id="wmOpacityInput" min="10" max="100" value="70" style="width: 100%;">
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Size (Scale)</label>
+                <input type="range" id="wmSizeInput" min="10" max="200" value="50" style="width: 100%;">
+            </div>
+        </div>
+        <div class="canvas-container" id="wmCanvasContainer" style="display: none; text-align: center;">
+            <canvas id="wmCanvas" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.5);"></canvas>
+            <br>
+            <button id="downloadWmBtn" class="download-btn" style="margin-top: 15px;">Download Image</button>
+        </div>
+    </section>
+
+    <section id="invoiceTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🧾 PDF Invoice Maker</h2>
+        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid var(--accent-cyan); margin-bottom: 15px;">
+            <h4 style="margin: 0 0 10px; color: var(--accent-cyan);">Business Details</h4>
+            <input type="text" id="invBizName" placeholder="Your Business Name" class="tool-input" style="margin-bottom: 10px;">
+            <input type="text" id="invBizAddress" placeholder="Your Business Address / Phone" class="tool-input" style="margin-bottom: 15px;">
+
+            <h4 style="margin: 0 0 10px; color: var(--accent-cyan);">Customer Details</h4>
+            <input type="text" id="invBillTo" placeholder="Customer Name" class="tool-input" style="margin-bottom: 10px;">
+            <input type="text" id="invBillAddress" placeholder="Customer Address / Phone" class="tool-input" style="margin-bottom: 10px;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="invNum" placeholder="Invoice # (e.g. 101)" class="tool-input">
+                <input type="text" id="invDate" placeholder="Date" class="tool-input">
+            </div>
+            
+            <h4 style="margin: 15px 0 10px; color: var(--accent-cyan);">Items</h4>
+            <div id="invoiceItemsContainer"></div>
+            
+            <button id="addInvoiceItemBtn" class="chip" style="margin-bottom: 15px;">+ Add Item</button>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <input type="number" id="invTax" placeholder="Tax %" class="tool-input">
+                <button id="downloadInvoiceBtn" class="download-btn" style="margin-top: 0;">Download PDF</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="heicTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🔄 HEIC to JPG Converter</h2>
+        <input type="file" id="heicInput" accept=".heic, .heif" style="margin-bottom: 20px; color: var(--text-main); width: 100%;">
+        <p id="heicStatus" style="display: none; margin-bottom: 15px; font-weight: bold; color: var(--accent-cyan);"></p>
+        <div id="heicPreviewContainer" style="text-align: center;">
+            <img id="heicPreview" style="display: none; max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px;">
+            <br>
+            <a id="heicDownloadBtn" class="download-btn" style="display: none;">Download JPG</a>
+        </div>
+    </section>
+
+    <section id="counterTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>📊 Word & Character Counter</h2>
+        <textarea id="counterInput" placeholder="Paste your text here..." class="tool-textarea" style="height: 150px;"></textarea>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--accent-cyan);">
+                <h3 id="wordCount" style="font-size: 2rem; color: var(--accent-cyan);">0</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Words</p>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--accent-purple);">
+                <h3 id="charCount" style="font-size: 2rem; color: var(--accent-purple);">0</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Characters</p>
+            </div>
+        </div>
+        <p id="readTime" style="margin-top: 15px; text-align: center; color: var(--text-muted);">Estimated Reading Time: 0 min</p>
+    </section>
+
+    <section id="caseTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🔠 Text Case Converter</h2>
+        <textarea id="caseInput" placeholder="Paste your text here..." class="tool-textarea" style="height: 150px;"></textarea>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button id="btnUpper" class="chip" style="border-radius: 8px;">UPPERCASE</button>
+            <button id="btnLower" class="chip" style="border-radius: 8px;">lowercase</button>
+            <button id="btnTitle" class="chip" style="border-radius: 8px;">Title Case</button>
+            <button id="btnCamel" class="chip" style="border-radius: 8px;">camelCase</button>
+        </div>
+        <button id="copyCaseBtn" class="download-btn" style="width: 100%; margin-top: 15px;">Copy Result</button>
+    </section>
+
+    <section id="colorPickerTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🎨 Color Hex Picker</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Upload an image and tap anywhere to extract the HEX color code.</p>
+        <input type="file" id="colorImageInput" accept="image/*" style="margin-bottom: 20px; color: var(--text-main); width: 100%;">
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--accent-cyan);">
+            <div id="colorDisplayBox" style="width: 50px; height: 50px; border-radius: 8px; background: #000; border: 2px solid #fff;"></div>
+            <div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Selected Color:</p>
+                <h3 id="colorHexText" style="color: var(--text-main); margin: 0; font-family: monospace;">#000000</h3>
+            </div>
+            <button id="copyColorBtn" class="chip" style="margin-left: auto;">Copy</button>
+        </div>
+        <div class="canvas-container" style="overflow: auto;">
+            <canvas id="colorCanvas" style="max-width: 100%; cursor: crosshair;"></canvas>
+        </div>
+    </section>
+
+    <section id="wheelTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🎲 Random Picker Raffle</h2>
+        <p style="color: var(--text-muted); margin-bottom: 10px;">Paste a list of names (one per line) to pick a random winner.</p>
+        <textarea id="wheelInput" placeholder="John&#10;Sarah&#10;Mike..." class="tool-textarea" style="height: 120px; margin-bottom: 15px;"></textarea>
+        <button id="spinBtn" class="download-btn" style="width: 100%; margin-top: 0; margin-bottom: 20px;">Pick Random Winner</button>
+        <div id="raffleBox" style="display: none; background: rgba(0,0,0,0.5); border: 2px solid var(--accent-purple); border-radius: 12px; padding: 30px 10px; text-align: center; overflow: hidden;">
+            <h2 id="raffleText" style="font-size: 2.5rem; margin: 0; color: var(--text-main); word-break: break-all;">???</h2>
+        </div>
+    </section>
+
+    <section id="bizCardTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🪪 Custom Business Card Maker</h2>
+        
+        <label style="color: var(--accent-cyan); font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 5px;">Custom Background Image (Optional)</label>
+        <input type="file" id="bcBgInput" accept="image/*" class="tool-input" style="margin-bottom: 15px; width: 100%;">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <input type="text" id="bcName" placeholder="Your Name" class="tool-input">
+            <input type="text" id="bcTitle" placeholder="Designation" class="tool-input">
+            <input type="text" id="bcBiz" placeholder="Business Name" class="tool-input" style="grid-column: span 2;">
+            <input type="text" id="bcPhone" placeholder="Phone Number" class="tool-input">
+            <input type="text" id="bcEmail" placeholder="Email Address" class="tool-input">
+            <input type="text" id="bcWeb" placeholder="Website / Instagram" class="tool-input" style="grid-column: span 2;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--accent-purple);">
+            <div style="grid-column: span 2;">
+                <label style="color: var(--text-muted); font-size: 0.85rem;">Name Font Size</label>
+                <input type="range" id="bcNameSize" min="30" max="120" value="60" style="width: 100%;">
+            </div>
+            <div style="grid-column: span 2;">
+                <label style="color: var(--text-muted); font-size: 0.85rem;">Info Font Size</label>
+                <input type="range" id="bcInfoSize" min="15" max="80" value="32" style="width: 100%;">
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem;">Name X Position</label>
+                <input type="range" id="bcNameX" min="10" max="1000" value="70" style="width: 100%;">
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem;">Name Y Position</label>
+                <input type="range" id="bcNameY" min="50" max="550" value="130" style="width: 100%;">
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem;">Info X Position</label>
+                <input type="range" id="bcInfoX" min="10" max="1000" value="70" style="width: 100%;">
+            </div>
+            <div>
+                <label style="color: var(--text-muted); font-size: 0.85rem;">Info Y Position</label>
+                <input type="range" id="bcInfoY" min="150" max="550" value="330" style="width: 100%;">
+            </div>
+        </div>
+
+        <div class="canvas-container" style="margin-bottom: 15px;">
+            <canvas id="bcCanvas" style="width: 100%; max-width: 500px; border: 1px solid var(--accent-cyan);"></canvas>
+        </div>
+        <button id="downloadBcBtn" class="download-btn" style="width: 100%;">Download Print-Ready PNG</button>
+    </section>
+
+    <section id="bionicTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>⚡ Fast Reader</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">Bolds the start of words to force your brain to read faster.</p>
+        <textarea id="bionicInput" placeholder="Paste study material here..." class="tool-textarea" style="height: 120px;"></textarea>
+        <div id="bionicOutput" style="background: #fff; color: #000; padding: 20px; border-radius: 8px; font-size: 1.1rem; line-height: 1.6; min-height: 100px; margin-bottom: 15px; font-family: serif;"></div>
+    </section>
+
+    <section id="recallTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🧠 Active Recall</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">Blacks out key words. Tap the black box to reveal the answer.</p>
+        <textarea id="recallInput" placeholder="Paste definitions to memorize..." class="tool-textarea" style="height: 120px;"></textarea>
+        <button id="genRecallBtn" class="download-btn" style="width: 100%; margin-top: 0; margin-bottom: 15px;">Generate Test</button>
+        <div id="recallOutput" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; border: 1px solid var(--accent-cyan); font-size: 1.1rem; line-height: 1.8;"></div>
+    </section>
+
+    <section id="skeletonTool" class="tool-interface" style="display: none;">
+        <button class="chip backBtn" style="margin-bottom: 20px;">← Back to Tools</button>
+        <h2>🦴 Keyword Skeletonizer</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">Strips grammar and stop-words. Extracts raw keyword bullet points.</p>
+        <textarea id="skelInput" placeholder="Paste massive paragraph here..." class="tool-textarea" style="height: 120px;"></textarea>
+        <button id="genSkelBtn" class="download-btn" style="width: 100%; margin-top: 0; margin-bottom: 15px;">Extract Keywords</button>
+        <div id="skelOutput" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; border: 1px solid var(--accent-purple); font-size: 1rem; line-height: 1.6;"></div>
+    </section>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active">Home</button>
+        <button class="nav-item">Tools</button>
+        <button class="nav-item" id="themeToggle">🌓 Theme</button>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
